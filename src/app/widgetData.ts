@@ -1,6 +1,6 @@
 // Union type to represent the different widget types
 type BaseWidget = {
-    id?: number;
+    id: number;
     widgetType: string;
 }
 
@@ -8,10 +8,6 @@ type TextWidget = BaseWidget & {
     widgetType: 'text';
     heading: string;
     content: string;
-    value?: never;
-    label?: never;
-    change?: never;
-    icon?: never;
 }
 
 type StatWidget = BaseWidget & {
@@ -20,8 +16,6 @@ type StatWidget = BaseWidget & {
     label: string;
     change: number;
     icon: string;
-    heading?: never;
-    content?: never;
 }
 
 // Union type that combines all widget types
@@ -30,20 +24,19 @@ export type Widget = TextWidget | StatWidget;
 // The full data array type
 export type WidgetData = Widget[];
 
-// Example usage with explicit type annotations
+// Sample data
 export const widgetData: WidgetData = [
     {
         id: 1,
-        heading: "Signups",
+        heading: "New signup",
         content: "User johndoe123 has signed up at 12:00 PM",
         widgetType: 'text'
     },
-
     {
         id: 2,
         widgetType: 'stat',
         value: 100,
-        label: 'Signups',
+        label: 'Total Users',
         change: 10,
         icon: '👨‍👩‍👦‍👦'
     },
