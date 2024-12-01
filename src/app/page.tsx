@@ -9,6 +9,7 @@ import {
 import { widgetData } from "./widgetData";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
+import Loading from "@/components/Loading";
 
 export default function Home() {
   const { toast } = useToast();
@@ -62,7 +63,9 @@ export default function Home() {
         />
       </div>
       {isLoading ? (
-        <div>Loading...</div>
+        <div>
+          <Loading />
+        </div>
       ) : (
         <WidgetGroup widgetData={widgetData} visibleWidgets={visibleWidgets} />
       )}
