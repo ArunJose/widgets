@@ -1,6 +1,6 @@
 import { Widget } from "@/app/widgetData";
-import { TextWidget } from "@/app/components/widgets/TextWidget";
-import { StatWidget } from "@/app/components/widgets/StatWidget";
+import { TextWidget } from "@/components/widgets/TextWidget";
+import { StatWidget } from "@/components/widgets/StatWidget";
 
 export function WidgetGroup({
   widgetData,

@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { widgetData } from "../widgetData";
+import { widgetData } from "../app/widgetData";
 
 export function WidgetVisibilityControl({
   visibleWidgets,

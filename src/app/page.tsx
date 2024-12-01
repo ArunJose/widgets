@@ -1,7 +1,7 @@
 "use client";
 
-import { WidgetGroup } from "./components/WidgetGroup";
-import { WidgetVisibilityControl } from "./components/WidgetVisibilityControl";
+import { WidgetGroup } from "../components/WidgetGroup";
+import { WidgetVisibilityControl } from "../components/WidgetVisibilityControl";
 import { widgetData } from "./widgetData";
 import { useState } from "react";
 
