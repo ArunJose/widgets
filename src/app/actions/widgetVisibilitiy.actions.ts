@@ -4,7 +4,12 @@ import { db } from "@/db/drizzle";
 import { widgetVisibility } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
-export async function toggleWidgetVisibility(widgetId: number, newVisibility: boolean) {
+const connectivityErrorResponse = {
+    success: false,
+    error: 'Unable to toggle widget visibility. Please check your internet connection and try again.'
+};
+
+export async function toggleWidgetVisibility(widgetId: number, newVisibility: boolean): Promise<{ success: boolean, error?: string }> {
     try {
         //Find existing record
         const existingWidgetVisibility = await db
@@ -30,23 +35,23 @@ export async function toggleWidgetVisibility(widgetId: number, newVisibility: bo
 
         return { success: true };
     } catch (error) {
-        console.error('Failed to toggle widget visibility:', error);
-        return {
-            success: false,
-            error: 'Failed to update widget visibility. Please try again.'
-        };
+        console.error('Failed to toggle widget visibility:', String(error));
+        return connectivityErrorResponse;
     }
 }
 
-export async function getAllWidgetVisibilities() {
+export async function getAllVisibleWidgetIds(): Promise<{ success: boolean, visibleWidgetIds?: number[], error?: string }> {
     try {
         const widgetVisibilities = await db.select().from(widgetVisibility);
-        return { success: true, widgetVisibilities };
-    } catch (error) {
-        console.error('Failed to get all widget visibilities:', error);
         return {
-            success: false,
-            error: 'Failed to get all widget visibilities. Please try again.'
+            success: true, visibleWidgetIds: widgetVisibilities.map((widgetVisibility) => {
+                if (widgetVisibility.isVisible) {
+                    return widgetVisibility.widgetId;
+                }
+            }).filter((id) => id !== undefined)
         };
+    } catch (error) {
+        console.error('Failed to get all widget visibilities:', String(error));
+        return connectivityErrorResponse;
     }
 }

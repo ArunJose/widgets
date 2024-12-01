@@ -2,14 +2,30 @@
 
 import { WidgetGroup } from "../components/WidgetGroup";
 import { WidgetVisibilityControl } from "../components/WidgetVisibilityControl";
-import { toggleWidgetVisibility } from "./actions/widgetVisibilitiy.actions";
+import {
+  toggleWidgetVisibility,
+  getAllVisibleWidgetIds,
+} from "./actions/widgetVisibilitiy.actions";
 import { widgetData } from "./widgetData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Home() {
-  const [visibleWidgets, setVisibleWidgets] = useState<number[]>(
-    widgetData.map((widget) => widget.id)
-  );
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(true);
+  const [visibleWidgets, setVisibleWidgets] = useState<number[]>([]);
+
+  useEffect(() => {
+    const fetchVisibleWidgets = async () => {
+      const visibleWidgetsData = await getAllVisibleWidgetIds();
+      console.log({ visibleWidgetsData });
+      if (visibleWidgetsData.success && visibleWidgetsData.visibleWidgetIds) {
+        setVisibleWidgets(visibleWidgetsData.visibleWidgetIds);
+      }
+    };
+    fetchVisibleWidgets();
+    setIsLoading(false);
+  }, []);
 
   const handleWidgetVisibilityChange = async (
     widgetId: number,
@@ -17,11 +33,22 @@ export default function Home() {
   ) => {
     const data = await toggleWidgetVisibility(widgetId, isVisible);
     if (data.success) {
+      /*toast({
+        title: "Widget visibility updated",
+        description: "The widget visibility saved to the database.",
+        duration: 1000,
+      });*/
       setVisibleWidgets((prevWidgets) =>
         isVisible
           ? [...prevWidgets, widgetId]
           : prevWidgets.filter((id) => id !== widgetId)
       );
+    } else {
+      toast({
+        title: "Error",
+        description: data.error,
+        variant: "destructive",
+      });
     }
   };
 
@@ -34,7 +61,11 @@ export default function Home() {
           handleWidgetVisibilityChange={handleWidgetVisibilityChange}
         />
       </div>
-      <WidgetGroup widgetData={widgetData} visibleWidgets={visibleWidgets} />
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <WidgetGroup widgetData={widgetData} visibleWidgets={visibleWidgets} />
+      )}
     </div>
   );
 }
