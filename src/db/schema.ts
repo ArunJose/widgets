@@ -5,3 +5,4 @@ export const widgetVisibility = pgTable("widget_visibility", {
     widgetId: integer("widget_id").notNull(),
     isVisible: boolean("is_visible").default(true).notNull(),
 });
+

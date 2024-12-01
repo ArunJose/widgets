@@ -2,6 +2,7 @@
 
 import { WidgetGroup } from "../components/WidgetGroup";
 import { WidgetVisibilityControl } from "../components/WidgetVisibilityControl";
+import { toggleWidgetVisibility } from "./actions/widgetVisibilitiy.actions";
 import { widgetData } from "./widgetData";
 import { useState } from "react";
 
@@ -10,15 +11,18 @@ export default function Home() {
     widgetData.map((widget) => widget.id)
   );
 
-  const handleWidgetVisibilityChange = (
+  const handleWidgetVisibilityChange = async (
     widgetId: number,
     isVisible: boolean
   ) => {
-    setVisibleWidgets((prevWidgets) =>
-      isVisible
-        ? [...prevWidgets, widgetId]
-        : prevWidgets.filter((id) => id !== widgetId)
-    );
+    const data = await toggleWidgetVisibility(widgetId, isVisible);
+    if (data.success) {
+      setVisibleWidgets((prevWidgets) =>
+        isVisible
+          ? [...prevWidgets, widgetId]
+          : prevWidgets.filter((id) => id !== widgetId)
+      );
+    }
   };
 
   return (
