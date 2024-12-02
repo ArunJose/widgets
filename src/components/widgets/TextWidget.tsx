@@ -6,9 +6,9 @@ export function TextWidget({
   content: string;
 }) {
   return (
-    <div>
-      <div className="text-xl text-gray-600">{heading}</div>
-      <div className="text">{content}</div>
+    <div className="min-h-[160px] flex flex-col">
+      <div className="text-lg font-semibold text-gray-900 mb-2">{heading}</div>
+      <div className="text-sm text-gray-600 leading-relaxed">{content}</div>
     </div>
   );
 }

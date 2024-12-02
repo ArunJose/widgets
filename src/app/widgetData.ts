@@ -50,7 +50,7 @@ export const widgetData: WidgetData = [
         id: 4,
         widgetType: 'stat',
         value: 25,
-        label: 'Temperature',
+        label: 'Temperature (°C)',
         change: -1,
         icon: '🌡️'
     },
@@ -58,7 +58,7 @@ export const widgetData: WidgetData = [
         id: 5,
         widgetType: 'stat',
         value: 50,
-        label: 'Humidity',
+        label: 'Humidity (%)',
         change: -5,
         icon: '💧',
     }

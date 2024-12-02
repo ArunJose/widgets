@@ -10,12 +10,15 @@ export function WidgetGroup({
   visibleWidgets: number[];
 }) {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
       {visibleWidgets
         .map((id) => widgetData.find((widget) => widget.id === id))
         .filter((widget): widget is Widget => widget !== undefined)
         .map((widget) => (
-          <div key={widget.id} className="bg-white p-4 rounded-lg shadow">
+          <div
+            key={widget.id}
+            className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+          >
             {widget.widgetType === "text" && (
               <TextWidget
                 key={widget.id}
