@@ -36,23 +36,39 @@ export default function Home() {
     widgetId: number,
     isVisible: boolean
   ) => {
-    const data = await toggleWidgetVisibility(
-      widgetId,
-      isVisible,
-      userId || ""
-    );
-    if (data.success) {
-      setVisibleWidgets((prevWidgets) =>
-        isVisible
-          ? [...prevWidgets, widgetId]
-          : prevWidgets.filter((id) => id !== widgetId)
+    try {
+      const data = await toggleWidgetVisibility(
+        widgetId,
+        isVisible,
+        userId || ""
       );
-    } else {
+      if (data.success) {
+        setVisibleWidgets((prevWidgets) =>
+          isVisible
+            ? [...prevWidgets, widgetId]
+            : prevWidgets.filter((id) => id !== widgetId)
+        );
+      } else {
+        toast({
+          title: "Error",
+          description: data.error || "Failed to update widget visibility",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Failed to update widget visibility. Please check your internet connection.";
+
+      console.error("Widget visibility update failed:", errorMessage);
+
       toast({
-        title: "Error",
-        description: data.error,
+        title: "Connection Error",
+        description: errorMessage,
         variant: "destructive",
       });
+      return { success: false };
     }
   };
 
