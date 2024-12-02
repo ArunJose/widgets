@@ -10,11 +10,14 @@ import { widgetData } from "./widgetData";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import Loading from "@/components/Loading";
+import { useUser } from "@clerk/nextjs";
+import SignInView from "../components/SignInView";
 
 export default function Home() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
   const [visibleWidgets, setVisibleWidgets] = useState<number[]>([]);
+  const { isLoaded, user } = useUser();
 
   useEffect(() => {
     const fetchVisibleWidgets = async () => {
@@ -23,9 +26,9 @@ export default function Home() {
       if (visibleWidgetsData.success && visibleWidgetsData.visibleWidgetIds) {
         setVisibleWidgets(visibleWidgetsData.visibleWidgetIds);
       }
+      setIsLoading(false);
     };
     fetchVisibleWidgets();
-    setIsLoading(false);
   }, []);
 
   const handleWidgetVisibilityChange = async (
@@ -47,6 +50,15 @@ export default function Home() {
       });
     }
   };
+
+  //Check if user is loaded
+  if (!isLoaded) {
+    return <Loading />;
+  }
+
+  if (!user) {
+    return <SignInView />;
+  }
 
   return (
     <div className="p-4 mx-4">
