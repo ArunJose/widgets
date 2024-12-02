@@ -27,7 +27,7 @@ To set up and run the project locally, follow these steps:
    pnpm install
    ```
 
-4. **Environment Variables**: Create a `.env` file in the root directory and add the necessary environment variables.
+4. **Environment Variables**: Create a `.env` file in the root directory and add the necessary environment variables. Please note the `DATABASE_URL` should be a valid Neon Postgres URL. The `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` can be obtained from Clerk.
 
    ```
    DATABASE_URL=""
