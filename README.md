@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Widgets Application
 
-## Getting Started
+## Overview
 
-First, run the development server:
+This project is a Next.js application that allows users to view and manage widgets. The main features include:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- User authentication to save widget view preferences.
+- Ability to toggle the visibility of different types of widgets, such as stat widgets and simple text widgets.
+- Persistence of widget visibility state for individual users across logins.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup Instructions
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To set up and run the project locally, follow these steps:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Prerequisites**: Ensure you have Node.js and pnpm installed on your system. Alternatively, you can use npm but pnpm is recommended.
 
-## Learn More
+2. **Clone the Repository**:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   git clone https://github.com/ArunJose/widgets.git
+   cd widgets
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Install Dependencies**:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   pnpm install
+   ```
 
-## Deploy on Vercel
+4. **Environment Variables**: Create a `.env` file in the root directory and add the necessary environment variables.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```
+   DATABASE_URL=""
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=""
+   CLERK_SECRET_KEY=""
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. **Database Setup**:
+
+   - Run migrations:
+     ```bash
+     pnpm drizzle-kit migrate
+     ```
+   - Push to the database
+     ```bash
+     pnpm drizzle-kit push
+     ```
+
+6. **Run the Application**:
+   ```bash
+   pnpm run dev
+   ```
+
+## Project Structure
+
+The project follows a typical Next.js structure with an `src` directory and an app router. Key directories include:
+
+- **`/src/app/actions/`**: Contains server actions for handling widget visibility.
+- **`/src/components/`**: Contains React components used throughout the application.
+
+## Technical Decisions
+
+- **Next.js**: Chosen for its ability to handle both frontend and backend logic in a single codebase.
+- **Server Actions**: Used instead of traditional REST APIs for simplicity and integration with Next.js.
+- **Clerk**: Selected for authentication due to its seamless integration with Next.js.
+- **Drizzle ORM**: Used for type-safe database querying with Neon Postgres.
+
+## Features
+
+- **Widget Management**: Users can toggle the visibility of widgets via a dropdown menu. A check mark next to the widget name indicates visible widgets.
+- **Authentication**: Users can sign in or sign up using email or Google.
+- **State Persistence**: Widget visibility preferences are saved and loaded based on the user's ID.
+
+## Error Handling and User Experience
+
+- **Error Handling**: Errors in data retrieval are communicated to the user via toast notifications. Authentication errors and validations are managed by Clerk.
+- **Loading States**: Loading animations are displayed during authentication checks and when fetching user-specific widget data.
+
+## Challenges and Solutions
+
+While there were no significant challenges, minor issues arose due to unsupported features in Neon Postgres. These were resolved by using syntax supported by Neon Postgres.
+
+## Potential Improvements
+
+- Add more variety of widgets.
+- Ability to edit widget data and store widget-specific values in the database.
+- Add testing.
+- Explore deployment options for wider accessibility.
