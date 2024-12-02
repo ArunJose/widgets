@@ -19,7 +19,7 @@ export default function Home() {
   useEffect(() => {
     const fetchVisibleWidgets = async () => {
       const visibleWidgetsData = await getAllVisibleWidgetIds();
-      console.log({ visibleWidgetsData });
+
       if (visibleWidgetsData.success && visibleWidgetsData.visibleWidgetIds) {
         setVisibleWidgets(visibleWidgetsData.visibleWidgetIds);
       }
@@ -34,11 +34,6 @@ export default function Home() {
   ) => {
     const data = await toggleWidgetVisibility(widgetId, isVisible);
     if (data.success) {
-      /*toast({
-        title: "Widget visibility updated",
-        description: "The widget visibility saved to the database.",
-        duration: 1000,
-      });*/
       setVisibleWidgets((prevWidgets) =>
         isVisible
           ? [...prevWidgets, widgetId]

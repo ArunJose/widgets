@@ -11,8 +11,9 @@ export function WidgetGroup({
 }) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
-      {widgetData
-        .filter((widget) => visibleWidgets.includes(widget.id))
+      {visibleWidgets
+        .map((id) => widgetData.find((widget) => widget.id === id))
+        .filter((widget): widget is Widget => widget !== undefined)
         .map((widget) => (
           <div key={widget.id} className="bg-white p-4 rounded-lg shadow">
             {widget.widgetType === "text" && (

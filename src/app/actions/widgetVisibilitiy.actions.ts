@@ -44,11 +44,11 @@ export async function getAllVisibleWidgetIds(): Promise<{ success: boolean, visi
     try {
         const widgetVisibilities = await db.select().from(widgetVisibility);
         return {
-            success: true, visibleWidgetIds: widgetVisibilities.map((widgetVisibility) => {
-                if (widgetVisibility.isVisible) {
-                    return widgetVisibility.widgetId;
-                }
-            }).filter((id) => id !== undefined)
+            success: true,
+            visibleWidgetIds: widgetVisibilities
+                .sort((a, b) => a.lastUpdated.getTime() - b.lastUpdated.getTime())
+                .map((wv) => wv.isVisible ? wv.widgetId : undefined)
+                .filter((id): id is number => id !== undefined)
         };
     } catch (error) {
         console.error('Failed to get all widget visibilities:', String(error));
