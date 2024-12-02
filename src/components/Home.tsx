@@ -67,7 +67,6 @@ export default function Home() {
   return (
     <div className="p-4 mx-4">
       <div className="flex flex-col items-center mb-6">
-        <h1 className="text-3xl font-bold underline mb-4">Widgets</h1>
         <WidgetVisibilityControl
           visibleWidgets={visibleWidgets}
           handleWidgetVisibilityChange={handleWidgetVisibilityChange}

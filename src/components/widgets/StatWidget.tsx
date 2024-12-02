@@ -4,7 +4,7 @@ export function StatWidget({
   change,
   icon = "",
 }: {
-  value: number;
+  value: string;
   label: string;
   change: number;
   icon: string;

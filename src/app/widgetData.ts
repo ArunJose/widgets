@@ -12,7 +12,7 @@ type TextWidget = BaseWidget & {
 
 type StatWidget = BaseWidget & {
     widgetType: 'stat';
-    value: number;
+    value: string;
     label: string;
     change: number;
     icon: string;
@@ -35,7 +35,7 @@ export const widgetData: WidgetData = [
     {
         id: 2,
         widgetType: 'stat',
-        value: 100,
+        value: "100",
         label: 'Total Users',
         change: 10,
         icon: '👨‍👩‍👦‍👦'
@@ -49,17 +49,25 @@ export const widgetData: WidgetData = [
     {
         id: 4,
         widgetType: 'stat',
-        value: 25,
-        label: 'Temperature (°C)',
+        value: "25°C",
+        label: 'Temperature',
         change: -1,
         icon: '🌡️'
     },
     {
         id: 5,
         widgetType: 'stat',
-        value: 50,
-        label: 'Humidity (%)',
+        value: "50%",
+        label: 'Humidity',
         change: -5,
         icon: '💧',
+    },
+    {
+        id: 6,
+        widgetType: 'stat',
+        value: "50%",
+        label: 'User Engagement',
+        change: 10,
+        icon: '👥',
     }
 ] as const;

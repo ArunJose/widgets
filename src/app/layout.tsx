@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
-import { AuthInfoBar } from "../components/AuthInfoBar";
+import { Navbar } from "../components/Navbar";
 import { ClerkProvider } from "@clerk/nextjs";
 
 const geistSans = localFont({
@@ -32,7 +32,7 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <AuthInfoBar />
+          <Navbar />
           <main>{children}</main>
           <Toaster />
         </body>
