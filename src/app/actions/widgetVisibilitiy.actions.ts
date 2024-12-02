@@ -3,15 +3,33 @@
 import { db } from "@/db/drizzle";
 import { widgetVisibility } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
+import { auth } from '@clerk/nextjs/server';
 
 const connectivityErrorResponse = {
     success: false,
     error: 'Unable to toggle widget visibility. Please check your internet connection and try again.'
 };
 
+async function validateUser(userId: string): Promise<{ success: boolean, error?: string }> {
+    const { userId: authenticatedUserId } = await auth();
+    if (!authenticatedUserId || authenticatedUserId !== userId) {
+        return {
+            success: false,
+            error: 'Unauthorized access'
+        };
+    }
+    return { success: true };
+}
+
 export async function toggleWidgetVisibility(widgetId: number, newVisibility: boolean, userId: string):
     Promise<{ success: boolean, error?: string }> {
     try {
+        // Validate user
+        const authResult = await validateUser(userId);
+        if (!authResult.success) {
+            return authResult;
+        }
+
         //Find existing record
         const existingWidgetVisibility = await db
             .select()
@@ -44,6 +62,12 @@ export async function toggleWidgetVisibility(widgetId: number, newVisibility: bo
 
 export async function getAllVisibleWidgetIds(userId: string): Promise<{ success: boolean, visibleWidgetIds?: number[], error?: string }> {
     try {
+        // Validate user
+        const authResult = await validateUser(userId);
+        if (!authResult.success) {
+            return authResult;
+        }
+
         const widgetVisibilities = await db.select().from(widgetVisibility).where(eq(widgetVisibility.userId, userId))
         return {
             success: true,
