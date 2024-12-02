@@ -26,7 +26,7 @@ export function WidgetVisibilityControl({
       <DropdownMenuTrigger asChild>
         <Button variant="outline">Select Widgets</Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
+      <DropdownMenuContent className="w-56 px-2">
         <DropdownMenuLabel>Toggle Widget Visibility</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {widgetData.map((widget) => (
@@ -36,6 +36,7 @@ export function WidgetVisibilityControl({
             onCheckedChange={(checked) =>
               handleWidgetVisibilityChange(widget.id, checked)
             }
+            className="[&>span]:border [&>span]:border-gray-300 [&>span]:rounded"
           >
             {widget.widgetType === "text" ? widget.heading : widget.label}
           </DropdownMenuCheckboxItem>
