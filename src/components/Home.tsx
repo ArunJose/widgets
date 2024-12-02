@@ -67,35 +67,50 @@ export default function Home() {
   }
 
   return (
-    <div className="p-4 mx-4">
-      <div className="flex flex-col items-center mb-8">
-        <p className="text-gray-600 mb-6 text-center max-w-2xl">
-          Select which widgets you would like to display on your dashboard.
-          Toggle widgets on/off to customize your view.
-        </p>
-        <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-lg shadow-sm">
-          <WidgetVisibilityControl
-            visibleWidgets={visibleWidgets}
-            handleWidgetVisibilityChange={handleWidgetVisibilityChange}
-          />
-          <span className="text-sm text-gray-500">
-            {visibleWidgets.length} widgets selected
-          </span>
-          <button
-            className="p-1 rounded-full hover:bg-gray-100"
-            title="Click to select which widgets to display on your dashboard"
-          >
-            <InfoCircledIcon className="w-4 h-4 text-gray-400" />
-          </button>
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="mb-8">
+          <h2 className="text-3xl font-semibold text-gray-900">Dashboard</h2>
         </div>
+
+        <div className="bg-white rounded-xl shadow-sm border p-6 mb-8">
+          <div className="max-w-2xl mx-auto text-center">
+            <p className="text-gray-600 mb-6">
+              Select which widgets you would like to display on your dashboard.
+              Toggle widgets on/off to customize your view.
+            </p>
+
+            <div className="inline-flex items-center gap-3 bg-gray-50 px-4 py-2 rounded-lg">
+              <WidgetVisibilityControl
+                visibleWidgets={visibleWidgets}
+                handleWidgetVisibilityChange={handleWidgetVisibilityChange}
+              />
+              <span className="text-sm text-gray-500">
+                {visibleWidgets.length} widgets selected
+              </span>
+              <button
+                className="p-1.5 rounded-full hover:bg-gray-200 transition-colors"
+                title="Click to select which widgets to display on your dashboard"
+              >
+                <InfoCircledIcon className="w-4 h-4 text-gray-500" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {isLoading ? (
+          <div className="flex justify-center p-12">
+            <Loading />
+          </div>
+        ) : (
+          <div className="grid gap-6">
+            <WidgetGroup
+              widgetData={widgetData}
+              visibleWidgets={visibleWidgets}
+            />
+          </div>
+        )}
       </div>
-      {isLoading ? (
-        <div>
-          <Loading />
-        </div>
-      ) : (
-        <WidgetGroup widgetData={widgetData} visibleWidgets={visibleWidgets} />
-      )}
     </div>
   );
 }

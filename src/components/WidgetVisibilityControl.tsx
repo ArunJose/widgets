@@ -39,10 +39,15 @@ export function WidgetVisibilityControl({
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Select Widgets</Button>
+        <Button
+          variant="outline"
+          className="bg-white hover:bg-gray-50 transition-colors"
+        >
+          Select Widgets
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-56 px-2 select-none"
+        className="w-64 px-2 py-2 shadow-lg border-gray-200"
         onSelect={(e) => e.preventDefault()}
       >
         <div className="flex items-center justify-between">
